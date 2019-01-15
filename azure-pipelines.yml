@@ -1,0 +1,13 @@
+resources:
+- repo: self
+queue:
+  name: Hosted Windows Container
+steps:
+- script: |
+   docker version
+   docker info
+   docker images
+   
+  displayName: 'Run some docker commands'
+
+
