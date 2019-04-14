@@ -1,7 +1,9 @@
-FROM golang:1.12.2 AS build
+ARG buildImage=golang
+ARG targetImage=ubuntu
+FROM $buildImage AS build
 COPY . .
 RUN go build hello.go
 
-FROM ubuntu
+FROM $targetImage
 COPY --from=build /go/hello /hello
 CMD [ "/hello" ]
