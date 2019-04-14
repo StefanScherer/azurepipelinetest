@@ -21,8 +21,8 @@ jobs:
   pool:
     vmImage: 'windows-2019'
   steps:
-  - powershell: |
-      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
+  - script: |
+      echo "%DOCKER_PASS%" | docker login --username "%DOCKER_USER%" --password-stdin
     env:
       DOCKER_USER: $(DOCKER_USER)
       DOCKER_PASS: $(DOCKER_PASS)
