@@ -22,8 +22,20 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - script: |
-      echo "%DOCKER_PASS%" | docker login --username "%DOCKER_USER%" --password-stdin
+      echo "%DOCKERPASS%" | docker login --username "%DOCKERUSER%" --password-stdin
     env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
+      DOCKERUSER: $(DOCKER_USER)
+      DOCKERPASS: $(DOCKER_PASS)
     displayName: 'Docker push'
+
+- job: Windows1803
+  pool:
+    vmImage: 'win1803'
+  steps:
+  - script: |
+      echo "%DOCKERPASS%" | docker login --username "%DOCKERUSER%" --password-stdin
+    env:
+      DOCKERUSER: $(DOCKER_USER)
+      DOCKERPASS: $(DOCKER_PASS)
+    displayName: 'Docker push'
+
