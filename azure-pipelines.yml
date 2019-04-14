@@ -1,7 +1,7 @@
 resources:
 - repo: self
 trigger:
-- master
+- mac
 queue:
   name: macOS-10.14
 steps:
