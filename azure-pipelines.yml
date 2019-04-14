@@ -36,6 +36,9 @@ jobs:
         }
       }
       "@ | Out-File -Encoding Ascii ~/.docker/config.json
+      docker images
+      cat ~/.docker/config.json
+      docker pull mcr.microsoft.com/windows/nanoserver:1809
       docker tag mcr.microsoft.com/windows/nanoserver:1809 stefanscherer/hello:test
       docker push stefanscherer/hello:test
     env:
