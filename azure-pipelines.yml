@@ -11,7 +11,14 @@ jobs:
     vmImage: 'macOS-10.14'
   steps:
   - script: |
-      echo hello from macOS
-      uname -a
+      echo "Downloading DMG."
+      curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
+      echo "Downloading DMG."
+      hdiutil attach docker.dmg
+      ls /Volumes
+      # cd /Volumes/DarwinPorts-1.2/
+      # sudo installer -pkg DarwinPorts-1.2.pkg -target "/"
+      # hdiutil detach /Volumes/DarwinPorts-1.2/
+
     displayName: Run on macOS 10.14
 
