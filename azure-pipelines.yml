@@ -34,7 +34,22 @@ jobs:
       docker run hello-world
     displayName: 'Check Docker'
 
-- job: Windows
+- job: 'Windows 1803'
+  pool:
+    vmImage: 'win1803'
+  steps:
+  - script: |
+      echo hello from Windows
+      ver
+    displayName: 'Check agent'
+  - script: |
+      docker version
+      docker info
+      docker images
+      docker run hello-world
+    displayName: 'Check Docker'
+
+- job: 'Windows 2019'
   pool:
     vmImage: 'windows-2019'
   steps:
