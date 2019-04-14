@@ -66,6 +66,38 @@ jobs:
       docker images
     displayName: 'List images'
 
+- job: LinuxARM64
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: |
+      echo hello from Linux
+      uname -a
+    displayName: 'Check agent'
+  - script: |
+      docker version
+      docker info
+      docker images
+    displayName: 'Check Docker'
+  # - script: |
+  #     docker run hello-world
+  #   displayName: 'Run hello-world'
+  # - script: |
+  #     docker run mplatform/mquery golang:1.12.2
+  #   displayName: 'Run mplatform/mquery golang:1.12.2'
+  - script: |
+      docker run --rm --privileged hypriot/qemu-register
+    displayName: 'Prepare cross build'
+  - script: |
+      docker build -t hello:linux-arm64 --build-arg buildImage=arm64v8/golang:1.12.3-stretch --build-arg targetImage=arm64v8/ubuntu .
+    displayName: 'Build image'
+  - script: |
+      docker run hello:linux-arm64
+    displayName: 'Test image'
+  - script: |
+      docker images
+    displayName: 'List images'
+
 # - job: macOS
 #   pool:
 #     vmImage: 'macOS-10.14'
