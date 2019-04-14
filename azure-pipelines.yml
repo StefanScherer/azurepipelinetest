@@ -79,7 +79,7 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
-  - script: |
+  - powershell: |
       Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -98,7 +98,7 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
-  - script: |
+  - powershell: |
       Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -117,7 +117,7 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
-  - script: |
+  - powershell: |
       Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
     env:
       DOCKER_USER: $(DOCKER_USER)
