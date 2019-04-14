@@ -26,7 +26,7 @@ jobs:
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
-      sleep 180
+      sleep 100
       sudo docker version
       sudo docker run hello-world
       sudo docker images
