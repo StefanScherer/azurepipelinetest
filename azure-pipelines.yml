@@ -34,7 +34,7 @@ jobs:
       docker run hello-world
     displayName: 'Check Docker'
 
-- job: 'Windows 1803'
+- job: Windows1803
   pool:
     vmImage: 'win1803'
   steps:
@@ -49,7 +49,7 @@ jobs:
       docker run hello-world
     displayName: 'Check Docker'
 
-- job: 'Windows 2019'
+- job: Windows2019
   pool:
     vmImage: 'windows-2019'
   steps:
