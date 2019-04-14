@@ -91,7 +91,7 @@ jobs:
       docker images
     displayName: 'List images'
   - powershell: |
-      Write-Output "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
+      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
       docker push stefanscherer/hello:windows-2016
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -112,7 +112,7 @@ jobs:
       docker images
     displayName: 'List images'
   - powershell: |
-      Write-Output "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
+      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
       docker push stefanscherer/hello:windows-1803
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -134,7 +134,7 @@ jobs:
       docker images
     displayName: 'List images'
   - powershell: |
-      Write-Output "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
+      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
       docker push stefanscherer/hello:windows-1809
     env:
       DOCKER_USER: $(DOCKER_USER)
