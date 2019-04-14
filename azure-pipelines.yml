@@ -42,7 +42,7 @@ jobs:
       docker info
       docker images
       docker run hello-world
-      docker run mplatform/mquery golang:1.12.2
+      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
     displayName: 'Check Docker'
 
 - job: Windows2019
@@ -58,5 +58,5 @@ jobs:
       docker info
       docker images
       docker run hello-world
-      docker run mplatform/mquery golang:1.12.2
+      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
     displayName: 'Check Docker'
