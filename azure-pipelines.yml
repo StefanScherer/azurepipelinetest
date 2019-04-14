@@ -6,133 +6,46 @@ trigger:
     - '*'
 
 jobs:
-- job: LinuxAMD64
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      docker build -t hello:linux-amd64 --build-arg buildImage=golang:1.12.3 .
-    displayName: 'Build image'
-  - script: |
-      docker run hello:linux-amd64
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
-
-- job: LinuxARM
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      docker run --rm --privileged hypriot/qemu-register
-    displayName: 'Prepare cross build'
-  - script: |
-      docker build -t hello:linux-arm --build-arg buildImage=arm32v7/golang:1.12.3-stretch --build-arg targetImage=arm32v7/ubuntu .
-    displayName: 'Build image'
-  - script: |
-      docker run hello:linux-arm
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
-
-- job: LinuxARM64
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      docker run --rm --privileged hypriot/qemu-register
-    displayName: 'Prepare cross build'
-  - script: |
-      docker build -t hello:linux-arm64 --build-arg buildImage=arm64v8/golang:1.12.3-stretch --build-arg targetImage=arm64v8/ubuntu .
-    displayName: 'Build image'
-  - script: |
-      docker run hello:linux-arm64
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
-
-- job: Windows2016
+- job: Windows1803
   pool:
     vmImage: 'win1803'
   steps:
-  - script: |
-      docker build --isolation=hyperv -t hello:windows-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
-    displayName: 'Build image'
-  - script: |
-      docker run --isolation=hyperv hello:windows-2016
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
   - powershell: |
-      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
+      Get-Service
+    displayName: 'List services'
+  - powershell: |
+      Get-WindowsFeature
+    displayName: 'List Windows features'
 
 - job: Windows1803
   pool:
     vmImage: 'win1803'
   steps:
-  - script: |
-      docker build -t hello:windows-1803 -f Dockerfile.windows --build-arg tag=1803 .
-    displayName: 'Build image'
-  - script: |
-      docker run hello:windows-1803
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
   - powershell: |
-      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
+      Get-Service
+    displayName: 'List services'
+  - powershell: |
+      Get-WindowsFeature
+    displayName: 'List Windows features'
+
+- job: Windows2016
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - powershell: |
+      Get-Service
+    displayName: 'List services'
+  - powershell: |
+      Get-WindowsFeature
+    displayName: 'List Windows features'
 
 - job: Windows2019
   pool:
     vmImage: 'windows-2019'
   steps:
-  - script: |
-      docker build -t hello:windows-1809 -f Dockerfile.windows --build-arg tag=1809 .
-    displayName: 'Build image'
-  - script: |
-      docker run hello:windows-1809
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
   - powershell: |
-      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
-
-- job: Manifest
-  dependsOn:
-  - LinuxAMD64
-  - LinuxARM
-  - LinuxARM64
-  - Windows2016
-  - Windows1803
-  - Windows2019
-  steps:
-  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-    displayName: 'Docker login'
+      Get-Service
+    displayName: 'List services'
+  - powershell: |
+      Get-WindowsFeature
+    displayName: 'List Windows features'
