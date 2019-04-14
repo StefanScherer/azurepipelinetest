@@ -11,6 +11,7 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: |
+      echo "$DOCKER_USER"
       echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -23,6 +24,7 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - powershell: |
+      Write-Output "$env:DOCKER_USER"
       Write-Output "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
     env:
       DOCKER_USER: $(DOCKER_USER)
@@ -34,6 +36,7 @@ jobs:
     vmImage: 'win1803'
   steps:
   - powershell: |
+      Write-Output "$env:DOCKER_USER"
       Write-Output "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
     env:
       DOCKER_USER: $(DOCKER_USER)
