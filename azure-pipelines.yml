@@ -1,8 +1,9 @@
 resources:
 - repo: self
 trigger:
-- master
-- pr-1
+  branches:
+    include:
+    - '*'  # must quote since "*" is a YAML reserved character; we want a string
 
 jobs:
 - job: LinuxVariable
