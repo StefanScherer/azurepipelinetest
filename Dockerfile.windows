@@ -1,4 +1,8 @@
-FROM golang:1.12.2
+ARG tag
+FROM golang:1.12.2 AS build
 COPY . .
 RUN go build hello.go
+
+FROM mcr.microsoft.com/windows/nanoserver:$tag
+COPY --from=build /gopath/hello.exe /hello.exe
 CMD [ "hello" ]

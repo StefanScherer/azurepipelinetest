@@ -1,4 +1,7 @@
-FROM golang:1.12.2
+FROM golang:1.12.2 AS build
 COPY . .
 RUN go build hello.go
-CMD [ "./hello" ]
+
+FROM ubuntu
+COPY --from=build /go/hello /hello
+CMD [ "/hello" ]

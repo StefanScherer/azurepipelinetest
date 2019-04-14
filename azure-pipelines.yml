@@ -30,6 +30,9 @@ jobs:
   - script: |
       docker run hello:linux
     displayName: 'Test image'
+  - script: |
+      docker images
+    displayName: 'List images'
 
 # - job: macOS
 #   pool:
@@ -64,11 +67,14 @@ jobs:
 #       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
 #     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker build -t hello:windows-1803 -f Dockerfile.windows .
+      docker build -t hello:windows-1803 -f Dockerfile.windows --build-arg tag=1803 .
     displayName: 'Build image'
   - script: |
       docker run hello:windows-1803
     displayName: 'Test image'
+  - script: |
+      docker images
+    displayName: 'List images'
 
 - job: Windows2019
   pool:
@@ -91,8 +97,11 @@ jobs:
 #       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
 #     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker build -t hello:windows-1809 -f Dockerfile.windows .
+      docker build -t hello:windows-1809 -f Dockerfile.windows --build-arg tag=1809 .
     displayName: 'Build image'
   - script: |
       docker run hello:windows-1809
     displayName: 'Test image'
+  - script: |
+      docker images
+    displayName: 'List images'
