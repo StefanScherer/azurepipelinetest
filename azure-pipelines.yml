@@ -20,6 +20,9 @@ jobs:
       hdiutil detach /Volumes/Docker/
       echo "Install Docker."
       sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended
+    displayName: Install Docker Desktop
+
+  - script: |
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
@@ -28,4 +31,4 @@ jobs:
       sudo docker run hello-world
       sudo docker images
       
-    displayName: Run on macOS 10.14
+    displayName: Run Docker Desktop
