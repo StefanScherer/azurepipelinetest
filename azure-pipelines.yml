@@ -27,7 +27,7 @@ jobs:
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
-      sleep 120
+      sleep 240
       # open /Applications/Docker.app --args --unattended --add-host-docker-internal-registry --log-output-directory $(pwd)
       echo "Started?"
       ls
