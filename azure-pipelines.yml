@@ -16,22 +16,16 @@ jobs:
       curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
       echo "Extract DMG."
       hdiutil attach docker.dmg
-      ls /Volumes
-      cd /Volumes/Docker/
-      ls
-      cp -av Docker.app /Applications/Docker.app
-      cd
+      (cd /Volumes/Docker/ ; cp -av Docker.app /Applications/Docker.app)
       hdiutil detach /Volumes/Docker/
       echo "Install Docker."
       sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
-      sleep 240
-      # open /Applications/Docker.app --args --unattended --add-host-docker-internal-registry --log-output-directory $(pwd)
-      echo "Started?"
-      ls
+      sleep 180
       sudo docker version
+      sudo docker run hello-world
+      sudo docker images
       
     displayName: Run on macOS 10.14
-
