@@ -17,17 +17,6 @@ jobs:
       Get-WindowsFeature
     displayName: 'List Windows features'
 
-- job: Windows1803
-  pool:
-    vmImage: 'win1803'
-  steps:
-  - powershell: |
-      Get-Service
-    displayName: 'List services'
-  - powershell: |
-      Get-WindowsFeature
-    displayName: 'List Windows features'
-
 - job: Windows2016
   pool:
     vmImage: 'vs2017-win2016'
