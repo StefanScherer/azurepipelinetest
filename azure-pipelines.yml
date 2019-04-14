@@ -3,13 +3,9 @@ resources:
 trigger:
   branches:
     include:
-    - '*'  # must quote since "*" is a YAML reserved character; we want a string
+    - '*'
+
 jobs:
-- job: LinuxVariable
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: echo "Push image to repository $DOCKER_USER ..."
 - job: LinuxAMD64
   pool:
     vmImage: 'ubuntu-16.04'
@@ -23,6 +19,10 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: LinuxARM
   pool:
@@ -40,6 +40,10 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: LinuxARM64
   pool:
@@ -57,6 +61,10 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: Windows2016
   pool:
@@ -71,6 +79,11 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: |
+      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: Windows1803
   pool:
@@ -85,6 +98,11 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: |
+      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: Windows2019
   pool:
@@ -99,6 +117,11 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+  - script: |
+      Write-Output "Now login to Docker Hub as $env:DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
 
 - job: Manifest
   dependsOn:
@@ -109,4 +132,7 @@ jobs:
   - Windows1803
   - Windows2019
   steps:
-  - script: echo "Now create the manifest list $DOCKER_USER ..."
+  - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
+    env:
+      DOCKER_USER: $(DOCKER_USER)
+    displayName: 'Docker login'
