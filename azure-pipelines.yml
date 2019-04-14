@@ -11,168 +11,19 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: |
-      docker build -t stefanscherer/hello:linux-amd64 --build-arg buildImage=golang:1.12.3 .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:linux-amd64
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: |
       echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-      docker push stefanscherer/hello:linux-amd64
     env:
       DOCKER_USER: $(DOCKER_USER)
       DOCKER_PASS: $(DOCKER_PASS)
     displayName: 'Docker push'
-
-
-- job: LinuxARM
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      docker run --rm --privileged hypriot/qemu-register
-    displayName: 'Prepare cross build'
-  - script: |
-      docker build -t stefanscherer/hello:linux-arm --build-arg buildImage=arm32v7/golang:1.12.3-stretch --build-arg targetImage=arm32v7/ubuntu .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:linux-arm
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: |
-      echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-      docker push stefanscherer/hello:linux-arm
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Docker push'
-
-
-- job: LinuxARM64
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      docker run --rm --privileged hypriot/qemu-register
-    displayName: 'Prepare cross build'
-  - script: |
-      docker build -t stefanscherer/hello:linux-arm64 --build-arg buildImage=arm64v8/golang:1.12.3-stretch --build-arg targetImage=arm64v8/ubuntu .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:linux-arm64
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - script: |
-      echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-      docker push stefanscherer/hello:linux-arm64
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Docker push'
-
-- job: Windows2016
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-  - script: |
-      docker build -t stefanscherer/hello:windows-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:windows-2016
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - powershell: |
-      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
-      docker push stefanscherer/hello:windows-2016
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Docker push'
-
-- job: Windows1803
-  pool:
-    vmImage: 'win1803'
-  steps:
-  - script: |
-      docker build -t stefanscherer/hello:windows-1803 -f Dockerfile.windows --build-arg tag=1803 .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:windows-1803
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
-  - powershell: |
-      docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
-      docker push stefanscherer/hello:windows-1803
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Docker push'
-
 
 - job: Windows2019
   pool:
     vmImage: 'windows-2019'
   steps:
-  - script: |
-      docker build -t stefanscherer/hello:windows-1809 -f Dockerfile.windows --build-arg tag=1809 .
-    displayName: 'Build image'
-  - script: |
-      docker run stefanscherer/hello:windows-1809
-    displayName: 'Test image'
-  - script: |
-      docker images
-    displayName: 'List images'
   - powershell: |
       docker login --username "$env:DOCKER_USER" --password "$env:DOCKER_PASS"
-      docker push stefanscherer/hello:windows-1809
     env:
       DOCKER_USER: $(DOCKER_USER)
       DOCKER_PASS: $(DOCKER_PASS)
     displayName: 'Docker push'
-
-- job: Manifest
-  dependsOn:
-  - LinuxAMD64
-  - LinuxARM
-  - LinuxARM64
-  - Windows2016
-  - Windows1803
-  - Windows2019
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      mkdir -p ~/.docker
-      echo '{ "experimental": "enabled" }' > ~/.docker/config.json
-      echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Enable docker manifest command'
-
-  - script: |
-      docker manifest create stefanscherer/hello:latest \
-        stefanscherer/hello:linux-amd64 \
-        stefanscherer/hello:linux-arm \
-        stefanscherer/hello:linux-arm64 \
-        stefanscherer/hello:windows-amd64-2016 \
-        stefanscherer/hello:windows-amd64-1803 \
-        stefanscherer/hello:windows-amd64-1809
-      docker manifest annotate stefanscherer/hello:latest stefanscherer/hello:linux-arm --os linux --arch arm --variant v6
-      docker manifest annotate stefanscherer/hello:latest stefanscherer/hello:linux-arm64 --os linux --arch arm64 --variant v8
-      docker manifest push stefanscherer/hello:latest
-    env:
-      DOCKER_USER: $(DOCKER_USER)
-      DOCKER_PASS: $(DOCKER_PASS)
-    displayName: 'Run docker manifest push'
