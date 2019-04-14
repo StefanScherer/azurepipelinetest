@@ -64,7 +64,7 @@ jobs:
 #       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
 #     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker build -t hello:windows-1803 .
+      docker build -t hello:windows-1803 -f Dockerfile.windows .
     displayName: 'Build image'
   - script: |
       docker run hello:windows-1803
@@ -91,7 +91,7 @@ jobs:
 #       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
 #     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker build -t hello:windows-1809 .
+      docker build -t hello:windows-1809 -f Dockerfile.windows .
     displayName: 'Build image'
   - script: |
       docker run hello:windows-1809
