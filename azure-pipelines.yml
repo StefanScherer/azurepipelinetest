@@ -3,19 +3,10 @@ resources:
 trigger:
 - master
 queue:
-  name: Hosted Windows Container
+  name: macOS-10.14
 steps:
 - script: |
-   docker version
-   docker info
-   docker images
+   uname -a
+   ls -a
    
   displayName: 'Run some docker commands'
-- script: |
-   docker build -t test .
-   
-  displayName: 'Build image'
-- script: |
-   docker run test
-   
-  displayName: 'Test image'
