@@ -2,6 +2,7 @@ resources:
 - repo: self
 trigger:
 - master
+- pr-1
 
 jobs:
 - job: LinuxVariable
