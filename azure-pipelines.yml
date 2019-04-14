@@ -4,6 +4,9 @@ trigger:
   branches:
     include:
     - '*'
+  tags:
+    include:
+      - refs/tags/*
 
 jobs:
 - job: Linux
