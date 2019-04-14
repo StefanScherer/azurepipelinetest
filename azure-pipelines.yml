@@ -16,9 +16,13 @@ jobs:
       docker version
       docker info
       docker images
-      docker run hello-world
-      docker run mplatform/mquery golang:1.12.2
     displayName: 'Check Docker'
+  - script: |
+      docker run hello-world
+    displayName: 'Run hello-world'
+  - script: |
+      docker run mplatform/mquery golang:1.12.2
+    displayName: 'Run mplatform/mquery golang:1.12.2'
 
 - job: macOS
   pool:
@@ -41,9 +45,13 @@ jobs:
       docker version
       docker info
       docker images
-      docker run hello-world
-      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
     displayName: 'Check Docker'
+  - script: |
+      docker run hello-world
+    displayName: 'Run hello-world'
+  - script: |
+      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
+    displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
 
 - job: Windows2019
   pool:
@@ -57,6 +65,10 @@ jobs:
       docker version
       docker info
       docker images
-      docker run hello-world
-      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
     displayName: 'Check Docker'
+  - script: |
+      docker run hello-world
+    displayName: 'Run hello-world'
+  - script: |
+      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
+    displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
