@@ -68,13 +68,13 @@ jobs:
 
 - job: Windows2016
   pool:
-    vmImage: 'win1803'
+    vmImage: 'vs2017-win2016'
   steps:
   - script: |
-      docker build --isolation=hyperv -t hello:windows-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
+      docker build -t hello:windows-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
     displayName: 'Build image'
   - script: |
-      docker run --isolation=hyperv hello:windows-2016
+      docker run hello:windows-2016
     displayName: 'Test image'
   - script: |
       docker images
@@ -131,6 +131,8 @@ jobs:
   - Windows2016
   - Windows1803
   - Windows2019
+  pool:
+    vmImage: 'ubuntu-16.04'
   steps:
   - script: echo "Now login to Docker Hub as $DOCKER_USER ..."
     env:
