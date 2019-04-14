@@ -11,7 +11,7 @@ jobs:
   - script: |
       echo hello from Linux
       uname -a
-      dpkg -l | grep docker
+      dpkg -l
     displayName: 'Check agent'
   - script: |
       docker version
