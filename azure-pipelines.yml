@@ -15,5 +15,7 @@ steps:
    docker build -t test .
    
   displayName: 'Build image'
-
-
+- script: |
+   docker run test
+   
+  displayName: 'Test image'
