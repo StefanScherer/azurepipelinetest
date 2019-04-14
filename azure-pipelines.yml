@@ -11,7 +11,7 @@ jobs:
       echo hello from Linux
       uname -a
       docker version
-    description: Run on Linux
+    displayName: 'Run on Linux'
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
@@ -20,7 +20,7 @@ jobs:
       echo hello from macOS
       uname -a
       docker version
-    description: Run on macOS 10.14
+    displayName: 'Run on macOS 10.14'
 - job: Windows
   pool:
     vmImage: 'windows-2019'
@@ -29,4 +29,4 @@ jobs:
       echo hello from Windows
       ver
       docker version
-    description: Run on Windows 2019
+    displayName: 'Run on Windows 2019'
