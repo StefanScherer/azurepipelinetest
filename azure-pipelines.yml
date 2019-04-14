@@ -11,6 +11,7 @@ jobs:
     vmImage: 'macOS-10.14'
   steps:
   - script: |
+      sudo ls
       echo "Downloading DMG."
       curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
       echo "Extract DMG."
