@@ -4,26 +4,15 @@ trigger:
 - master
 
 jobs:
+- job: LinuxVariable
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: echo "Push image to repository $DOCKER_USER ..."
 - job: LinuxAMD64
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: |
-      echo hello from Linux
-      uname -a
-      # dpkg -l
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-  # - script: |
-  #     docker run hello-world
-  #   displayName: 'Run hello-world'
-  # - script: |
-  #     docker run mplatform/mquery golang:1.12.2
-  #   displayName: 'Run mplatform/mquery golang:1.12.2'
   - script: |
       docker build -t hello:linux-amd64 --build-arg buildImage=golang:1.12.3 .
     displayName: 'Build image'
@@ -38,21 +27,6 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: |
-      echo hello from Linux
-      uname -a
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-  # - script: |
-  #     docker run hello-world
-  #   displayName: 'Run hello-world'
-  # - script: |
-  #     docker run mplatform/mquery golang:1.12.2
-  #   displayName: 'Run mplatform/mquery golang:1.12.2'
   - script: |
       docker run --rm --privileged hypriot/qemu-register
     displayName: 'Prepare cross build'
@@ -71,21 +45,6 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
   - script: |
-      echo hello from Linux
-      uname -a
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-  # - script: |
-  #     docker run hello-world
-  #   displayName: 'Run hello-world'
-  # - script: |
-  #     docker run mplatform/mquery golang:1.12.2
-  #   displayName: 'Run mplatform/mquery golang:1.12.2'
-  - script: |
       docker run --rm --privileged hypriot/qemu-register
     displayName: 'Prepare cross build'
   - script: |
@@ -98,38 +57,10 @@ jobs:
       docker images
     displayName: 'List images'
 
-# - job: macOS
-#   pool:
-#     vmImage: 'macOS-10.14'
-#   steps:
-#   - script: |
-#       echo hello from macOS
-#       uname -a
-#     displayName: 'Check agent'
-#   # Docker is not installed on macOS agent
-#   - script: |
-#       docker version
-#     displayName: 'Check Docker'
-
 - job: Windows2016
   pool:
     vmImage: 'win1803'
   steps:
-  - script: |
-      echo hello from Windows
-      ver
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-#   - script: |
-#       docker run hello-world
-#     displayName: 'Run hello-world'
-#   - script: |
-#       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
-#     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
       docker build --isolation=hyperv -t hello:windows-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
     displayName: 'Build image'
@@ -145,21 +76,6 @@ jobs:
     vmImage: 'win1803'
   steps:
   - script: |
-      echo hello from Windows
-      ver
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-#   - script: |
-#       docker run hello-world
-#     displayName: 'Run hello-world'
-#   - script: |
-#       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
-#     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
-  - script: |
       docker build -t hello:windows-1803 -f Dockerfile.windows --build-arg tag=1803 .
     displayName: 'Build image'
   - script: |
@@ -174,22 +90,6 @@ jobs:
     vmImage: 'windows-2019'
   steps:
   - script: |
-      echo hello from Windows
-      ver
-    displayName: 'Check agent'
-  - script: |
-      docker version
-      docker info
-      docker images
-    displayName: 'Check Docker'
-#   - script: |
-#       docker run hello-world
-#     displayName: 'Run hello-world'
-#   # hyperv isolation doesn't seem to work on windows-2019 agent
-#   - script: |
-#       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
-#     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
-  - script: |
       docker build -t hello:windows-1809 -f Dockerfile.windows --build-arg tag=1809 .
     displayName: 'Build image'
   - script: |
@@ -198,3 +98,14 @@ jobs:
   - script: |
       docker images
     displayName: 'List images'
+
+- job: Manifest
+  dependsOn:
+  - LinuxAMD64
+  - LinuxARM
+  - LinuxARM64
+  - Windows2016
+  - Windows1803
+  - Windows2019
+  steps:
+  - script: echo "Now create the manifest list $DOCKER_USER ..."
