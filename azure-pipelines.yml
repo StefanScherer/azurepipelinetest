@@ -13,12 +13,21 @@ jobs:
   - script: |
       echo "Downloading DMG."
       curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
-      echo "Downloading DMG."
+      echo "Extract DMG."
       hdiutil attach docker.dmg
       ls /Volumes
-      # cd /Volumes/DarwinPorts-1.2/
-      # sudo installer -pkg DarwinPorts-1.2.pkg -target "/"
-      # hdiutil detach /Volumes/DarwinPorts-1.2/
-
+      cd /Volumes/Docker/
+      ls
+      cp -av Docker.app /Applications/Docker.app
+      cd
+      hdiutil detach /Volumes/Docker/
+      echo "Install Docker."
+      sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components
+      echo "Start Docker."
+      open /Applications/Docker.app --args --unattended --add-host-docker-internal-registry --log-output-directory $(pwd)
+      echo "Started?"
+      ls
+      docker version
+      
     displayName: Run on macOS 10.14
 
