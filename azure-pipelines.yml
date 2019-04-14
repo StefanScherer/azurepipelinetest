@@ -13,5 +13,5 @@ jobs:
   - script: |
       echo hello from macOS
       uname -a
-    description: Run on macOS 10.14
+    displayName: Run on macOS 10.14
 
