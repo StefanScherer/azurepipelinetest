@@ -1,7 +1,7 @@
 resources:
 - repo: self
 trigger:
-- mac
+- master
 
 jobs:
 - job: Linux
@@ -24,15 +24,25 @@ jobs:
   - script: |
       docker run mplatform/mquery golang:1.12.2
     displayName: 'Run mplatform/mquery golang:1.12.2'
-
-- job: macOS
-  pool:
-    vmImage: 'macOS-10.14'
-  steps:
   - script: |
-      echo hello from macOS
-      uname -a
-    displayName: 'Check agent'
+      docker build -t hello:linux .
+    displayName: 'Build image'
+  - script: |
+      docker run hello:linux
+    displayName: 'Test image'
+
+# - job: macOS
+#   pool:
+#     vmImage: 'macOS-10.14'
+#   steps:
+#   - script: |
+#       echo hello from macOS
+#       uname -a
+#     displayName: 'Check agent'
+#   # Docker is not installed on macOS agent
+#   - script: |
+#       docker version
+#     displayName: 'Check Docker'
 
 - job: Windows1803
   pool:
@@ -47,12 +57,18 @@ jobs:
       docker info
       docker images
     displayName: 'Check Docker'
+#   - script: |
+#       docker run hello-world
+#     displayName: 'Run hello-world'
+#   - script: |
+#       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
+#     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker run hello-world
-    displayName: 'Run hello-world'
+      docker build -t hello:windows-1803 .
+    displayName: 'Build image'
   - script: |
-      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
-    displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
+      docker run hello:windows-1803
+    displayName: 'Test image'
 
 - job: Windows2019
   pool:
@@ -67,9 +83,16 @@ jobs:
       docker info
       docker images
     displayName: 'Check Docker'
+#   - script: |
+#       docker run hello-world
+#     displayName: 'Run hello-world'
+#   # hyperv isolation doesn't seem to work on windows-2019 agent
+#   - script: |
+#       docker run --isolation=hyperv mplatform/mquery golang:1.12.2
+#     displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
   - script: |
-      docker run hello-world
-    displayName: 'Run hello-world'
+      docker build -t hello:windows-1809 .
+    displayName: 'Build image'
   - script: |
-      docker run --isolation=hyperv mplatform/mquery golang:1.12.2
-    displayName: 'Run --isolation=hyperv mplatform/mquery golang:1.12.2'
+      docker run hello:windows-1809
+    displayName: 'Test image'
