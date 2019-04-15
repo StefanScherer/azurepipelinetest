@@ -11,5 +11,9 @@ The following jobs are configured:
 - Windows Server 1803
 - Windows Server 2019
 
+After each Docker image is pushed to Docker Hub with a platform specific tag the pipeline
+activates the `docker manifest` command to create a manifest list of all the six images.
+
+The manifest list is pushed to Docker Hub [stefanscherer/hello:latest](https://cloud.docker.com/repository/docker/stefanscherer/hello)
 
 For an introduction to Azure Pipelines watch this video https://www.youtube.com/watch?v=vlBuNM6Wzic 
