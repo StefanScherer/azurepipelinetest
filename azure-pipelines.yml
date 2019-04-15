@@ -182,9 +182,9 @@ jobs:
         stefanscherer/hello:linux-amd64 \
         stefanscherer/hello:linux-arm \
         stefanscherer/hello:linux-arm64 \
-        stefanscherer/hello:windows-amd64-amd64-2016 \
-        stefanscherer/hello:windows-amd64-amd64-1803 \
-        stefanscherer/hello:windows-amd64-amd64-1809
+        stefanscherer/hello:windows-amd64-2016 \
+        stefanscherer/hello:windows-amd64-1803 \
+        stefanscherer/hello:windows-amd64-1809
       docker manifest annotate stefanscherer/hello:latest stefanscherer/hello:linux-arm --os linux --arch arm --variant v6
       docker manifest annotate stefanscherer/hello:latest stefanscherer/hello:linux-arm64 --os linux --arch arm64 --variant v8
       docker manifest push stefanscherer/hello:latest
