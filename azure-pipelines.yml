@@ -81,7 +81,8 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: |
+  - powershell: |
+      Start-Sleep -Seconds 30
       docker build -t stefanscherer/hello:windows-amd64-2016 -f Dockerfile.windows --build-arg tag=sac2016 .
     displayName: 'Build image'
   - script: |
