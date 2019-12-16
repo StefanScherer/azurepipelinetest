@@ -18,7 +18,7 @@ jobs:
   - script: |
       sudo ls
       echo "Downloading DMG."
-      curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
+      curl -Lo docker.dmg https://download.docker.com/mac/edge/41561/Docker.dmg
       echo "Extract DMG."
       hdiutil attach docker.dmg
       (cd /Volumes/Docker/ ; cp -av Docker.app /Applications/Docker.app)
