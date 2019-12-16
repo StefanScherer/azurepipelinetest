@@ -32,15 +32,17 @@ jobs:
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
-      sleep 100
-      sudo docker version
-      sudo docker run hello-world
-      sudo docker images
+      sleep 200
+      ps -ef
+      ls -l /Applications/Docker.app/Contents/Resources/bin/docker
+      sudo /Applications/Docker.app/Contents/Resources/bin/docker version
+      sudo /Applications/Docker.app/Contents/Resources/bin/docker run hello-world
+      sudo /Applications/Docker.app/Contents/Resources/bin/docker images
 
-    displayName: Run Docker Desktop
+    displayName: Start Docker
 
   - script: |
       sudo docker build -t test .
       sudo docker run test
 
-    displayName: Run Docker Desktop
+    displayName: Build and run container
