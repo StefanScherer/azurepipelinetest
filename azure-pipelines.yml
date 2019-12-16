@@ -11,6 +11,11 @@ jobs:
     vmImage: 'macOS-10.14'
   steps:
   - script: |
+      sysctl kern.hv_support
+      sysctl machdep.cpu.features
+    displayName: List CPU features
+
+  - script: |
       sudo ls
       echo "Downloading DMG."
       curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
