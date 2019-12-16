@@ -10,7 +10,8 @@ jobs:
   pool:
     vmImage: 'macOS-10.14'
   steps:
-  - script: |
+  - displayName: Install Docker Desktop
+    script: |
       sudo ls
       echo "Downloading DMG."
       curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
@@ -20,9 +21,9 @@ jobs:
       hdiutil detach /Volumes/Docker/
       echo "Install Docker."
       sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended
-    displayName: Install Docker Desktop
 
-  - script: |
+  - displayName: Run Docker Desktop
+    script: |
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
@@ -30,5 +31,8 @@ jobs:
       sudo docker version
       sudo docker run hello-world
       sudo docker images
-      
-    displayName: Run Docker Desktop
+
+  - displayName: Run Docker Desktop
+    script: |
+      sudo docker build -t test .
+      sudo docker run test
