@@ -24,7 +24,7 @@ jobs:
       (cd /Volumes/Docker/ ; cp -av Docker.app /Applications/Docker.app)
       hdiutil detach /Volumes/Docker/
       echo "Install Docker."
-      sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended
+      sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended || true
 
     displayName: Install Docker Desktop
 
