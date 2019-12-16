@@ -18,13 +18,13 @@ jobs:
   - script: |
       sudo ls
       echo "Downloading DMG."
-      curl -Lo docker.dmg https://download.docker.com/mac/edge/41561/Docker.dmg
+      curl -Lo docker.dmg https://download.docker.com/mac/stable/28905/Docker.dmg
       echo "Extract DMG."
       hdiutil attach docker.dmg
       (cd /Volumes/Docker/ ; cp -av Docker.app /Applications/Docker.app)
       hdiutil detach /Volumes/Docker/
       echo "Install Docker."
-      sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended || true
+      sudo /Applications/Docker.app/Contents/MacOS/Docker --quit-after-install --unattended
 
     displayName: Install Docker Desktop
 
@@ -32,12 +32,10 @@ jobs:
       echo "Start Docker."
       sh -c "sudo /Applications/Docker.app/Contents/MacOS/Docker --install-privileged-components --unattended" &
       echo "Wait a little bit..."
-      sleep 200
-      ps -ef
-      ls -l /Applications/Docker.app/Contents/Resources/bin/docker
-      sudo /Applications/Docker.app/Contents/Resources/bin/docker version
-      sudo /Applications/Docker.app/Contents/Resources/bin/docker run hello-world
-      sudo /Applications/Docker.app/Contents/Resources/bin/docker images
+      sleep 100
+      sudo docker version
+      sudo docker run hello-world
+      sudo docker images
 
     displayName: Start Docker
 
