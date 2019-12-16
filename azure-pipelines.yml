@@ -38,3 +38,6 @@ jobs:
   - powershell: |
       Get-WindowsFeature
     displayName: 'List Windows features'
+  - powershell: |
+      GWMI Win32_Processor
+    displayName: 'List processor'
